@@ -13,7 +13,7 @@
         <!--推荐视频-->
         <h2>推荐视频</h2>
 
-        <div id="recommend">
+        <div class="recommend">
             <router-link :to="'/page/'+v.id" v-for="v in commendLessons" :key="v.id">
                 <img :src="v.thumb" alt="" />
                 <i class="iconfont icon-bofang"></i>
@@ -25,6 +25,20 @@
 
         <a href="" class="more">MORE ></a>
 
+      <!--热门视频-->
+      <h2>热门视频</h2>
+
+      <div class="recommend">
+        <router-link :to="'/page/'+v.id" v-for="v in hotLessons" :key="v.id">
+          <img :src="v.thumb" alt="" />
+          <i class="iconfont icon-bofang"></i>
+          <span class="time">04:56</span>
+          <span class="title" style="white-space: nowrap;text-overflow:ellipsis;overflow: hidden">{{v.introduce}}</span>
+        </router-link>
+      </div>
+      <!--热门视频结束-->
+
+      <a href="" class="more">MORE ></a>
 
         <!--今日话题-->
         <h2>今日话题</h2>
@@ -85,6 +99,7 @@
                 },
                 sliders:[],
                 commendLessons:[],
+                hotLessons:[],
                 hiddenSliders:[]
             }
         },
@@ -101,6 +116,12 @@
                     this.commendLessons = response.data;
                 })
             },
+            getHotLessons(){
+              Vue.axios.get('http://video.jwtan.cn/getHotLessons/4').then((response) => {
+                // console.log(response.data);
+                this.hotLessons = response.data;
+              })
+            },
             getHiddenSliders(){
                 Vue.axios.get('http://video.jwtan.cn/getHiddenSliders').then((response) => {
                     // console.log(response.data);
@@ -112,6 +133,7 @@
             this.getSliders();
             this.getCommendLessons();
             this.getHiddenSliders();
+            this.getHotLessons();
         }
     }
 </script>
@@ -195,7 +217,7 @@
     }
 
     /*推荐视频*/
-    #recommend {
+    .recommend {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -203,7 +225,7 @@
         margin: 0 auto;
     }
 
-    #recommend a {
+    .recommend a {
         width: 48%;
         overflow: hidden;
         display: block;
@@ -211,11 +233,11 @@
         position: relative;
     }
 
-    #recommend a img {
+    .recommend a img {
         width: 100%;
     }
 
-    #recommend a .iconfont.icon-bofang {
+    .recommend a .iconfont.icon-bofang {
         position: absolute;
         color: rgba(255, 255, 255, 1);
         left: 50%;;
@@ -227,7 +249,7 @@
         line-height: 1em;
     }
 
-    #recommend a .time {
+    .recommend a .time {
         line-height: 1.5em;
         font-size: 3vw;
         color: white;
@@ -238,7 +260,7 @@
         padding: 0 2%;
     }
 
-    #recommend a .title {
+    .recommend a .title {
         position: absolute;
         bottom: 0;
         left: 0;
